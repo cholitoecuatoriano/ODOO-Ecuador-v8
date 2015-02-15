@@ -39,7 +39,7 @@ class account_tax(osv.osv):
                 'assets':fields.boolean('Assets', required=False),
                 'imports':fields.boolean('Imports', required=False),
                 'exports':fields.boolean('Exports', required=False),
-                'tax_system':fields.boolean('Tax system', required=False, help="Tax system facturadeuna.com, you can not change"),
+                'tax_system':fields.boolean('Tax system', required=False, help="Tax system you can not change"),
 
                                     }
 

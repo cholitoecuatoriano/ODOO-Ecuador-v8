@@ -24,12 +24,11 @@ import time
 import logging
 
 from openerp.osv import osv, fields
-from tools import config
-from tools.translate import _
-from tools import ustr
-import decimal_precision as dp
-import netsvc
-import pdb
+from openerp.tools import config
+from openerp.tools.translate import _
+from openerp.tools import ustr
+import openerp.addons.decimal_precision as dp
+import openerp.netsvc
 
 class AccountWithdrawing(osv.osv):
 

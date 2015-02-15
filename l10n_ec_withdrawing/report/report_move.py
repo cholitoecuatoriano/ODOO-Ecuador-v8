@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
@@ -15,14 +15,14 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
 import time
-from report import report_sxw
-from osv import osv
-import pooler
+from openerp.report import report_sxw
+from openerp.osv import osv
+import openerp.pooler
 
 class move(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -59,6 +59,6 @@ class move(report_sxw.rml_parse):
             user = user_pool.browse(self.cr, self.uid, data[0])
             user_name = user.name
         return user_name
-   
+
 report_sxw.report_sxw('report.account.move','account.move','addons/retention/report/report_move.rml',parser=move)
 

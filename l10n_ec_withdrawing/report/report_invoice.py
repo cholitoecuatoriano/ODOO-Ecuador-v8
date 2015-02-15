@@ -21,7 +21,7 @@
 
 
 from datetime import datetime
-from report import report_sxw
+from openerp.report import report_sxw
 
 class report_invoice(report_sxw.rml_parse):
 
@@ -35,4 +35,4 @@ report_sxw.report_sxw('report.invoice.pdf', 'account.invoice', 'retention/report
 
 
 
-    
+

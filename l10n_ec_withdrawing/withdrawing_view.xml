@@ -495,8 +495,9 @@
 	</field>
       </field>
     </record>
-
+    <!--
     <wizard string="Discount" model="account.invoice" name="invoice.discount" id="invoice_discount" menu="False"/>
+    -->
 
   </data>
 </openerp>

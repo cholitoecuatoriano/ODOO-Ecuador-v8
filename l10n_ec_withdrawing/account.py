@@ -25,13 +25,10 @@ __author__ = 'Cristian Salamea (cristian.salamea@gmail.com)'
 
 import time
 from datetime import datetime
-
 from openerp.osv import osv, fields
-from tools import ustr
-
 
 class account_tax(osv.osv):
-    
+
     _name = 'account.tax'
     _inherit = 'account.tax'
     _order = 'tax_group desc'

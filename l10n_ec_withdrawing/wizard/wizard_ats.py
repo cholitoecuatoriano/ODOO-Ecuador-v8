@@ -28,8 +28,7 @@ import os
 import datetime
 import logging
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 
 tpIdProv = {
     'ruc' : '01',
@@ -130,7 +129,7 @@ class wizard_ats(osv.osv_memory):
         etree.SubElement(ats, 'IdInformante').text = str(ruc)
         etree.SubElement(ats, 'razonSocial').text = wiz.company_id.name
         period = self.pool.get('account.period').browse(cr, uid, [period_id])[0]
-        etree.SubElement(ats, 'Anio').text = time.strftime('%Y',time.strptime(period.date_start, '%Y-%m-%d'))        
+        etree.SubElement(ats, 'Anio').text = time.strftime('%Y',time.strptime(period.date_start, '%Y-%m-%d'))
         etree.SubElement(ats, 'Mes'). text = time.strftime('%m',time.strptime(period.date_start, '%Y-%m-%d'))
         etree.SubElement(ats, 'numEstabRuc').text = wiz.num_estab_ruc.zfill(3)
         total_ventas = self._get_ventas(cr, period_id)
@@ -142,7 +141,7 @@ class wizard_ats(osv.osv_memory):
                                             ('period_id','=',period_id),
                                             ('type','in',['in_invoice','liq_purchase']),
                                             ('company_id','=',wiz.company_id.id)])
-        self.__logger.info("Compras registradas: %s" % len(inv_ids))        
+        self.__logger.info("Compras registradas: %s" % len(inv_ids))
         for inv in inv_obj.browse(cr, uid, inv_ids):
             detallecompras = etree.Element('detalleCompras')
             etree.SubElement(detallecompras, 'codSustento').text = inv.sustento_id.code
@@ -201,7 +200,7 @@ class wizard_ats(osv.osv_memory):
                     etree.SubElement(detalleAir, 'valRetAir').text = '%.2f' % da['valRetAir']
                     air.append(detalleAir)
                 detallecompras.append(air)
-            flag = False            
+            flag = False
             if inv.retention_id and (inv.retention_ir or inv.retention_vat):
                 flag = True
                 etree.SubElement(detallecompras, 'estabRetencion1').text = flag and inv.journal_id.auth_ret_id.serie_entidad or '000'
@@ -278,7 +277,7 @@ class wizard_ats(osv.osv_memory):
                                             ('period_id','=',period_id),
                                             ('type','=','out_invoice'),
                                             ('company_id','=',wiz.company_id.id)])
-        self.__logger.info("Ventas Anuladas: %s" % len(inv_ids))        
+        self.__logger.info("Ventas Anuladas: %s" % len(inv_ids))
         for inv in inv_obj.browse(cr, uid, inv_ids):
             detalleAnulados = etree.Element('detalleAnulados')
             etree.SubElement(detalleAnulados, 'tipoComprobante').text = inv.journal_id.auth_id.type_id.code
@@ -333,8 +332,8 @@ class wizard_ats(osv.osv_memory):
         out=base64.encodestring(buf.getvalue())
         buf.close()
         name = "%s%s%s.XML" % ("AT", wiz.period_id.name[:2], wiz.period_id.name[3:8])
-        return self.write(cr, uid, ids, {'state': 'export', 'data': out, 'name': name})        
-        
+        return self.write(cr, uid, ids, {'state': 'export', 'data': out, 'name': name})
+
     _columns = {
         'name' : fields.char('Nombre de Archivo', size=50, readonly=True),
         'period_id' : fields.many2one('account.period', 'Periodo'),
@@ -344,7 +343,7 @@ class wizard_ats(osv.osv_memory):
         'data' : fields.binary('Archivo XML'),
         'no_validate': fields.boolean('No Validar'),
         'state' : fields.selection((('choose', 'choose'),
-                                    ('export', 'export'))),        
+                                    ('export', 'export'))),
         }
 
     _defaults = {
@@ -353,6 +352,6 @@ class wizard_ats(osv.osv_memory):
         'company_id': _get_company,
         'pay_limit': 1000.00,
         'num_estab_ruc': '001'
-    }    
+    }
 
 wizard_ats()
