@@ -30,6 +30,8 @@ from openerp.tools import ustr
 import openerp.addons.decimal_precision as dp
 import openerp.netsvc
 
+from openerp import models, api
+
 class AccountWithdrawing(osv.osv):
 
     def name_get(self, cr, uid, ids, context=None):
@@ -906,9 +908,9 @@ class Invoice(osv.osv):
                     'manual_ret_num': False,
                     'retention_numbers': False})
         return res
-
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,\
-            date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+                    date_invoice=False, payment_term=False,
+                    partner_bank_id=False, company_id=False, context=None):
         auth_obj = self.pool.get('account.authorisation')
         res1 = super(Invoice, self).onchange_partner_id(cr, uid, ids, type,
                                                         partner_id, date_invoice,
@@ -916,7 +918,9 @@ class Invoice(osv.osv):
                                                         company_id)
         if res1['value'].has_key('reference_type'):
             res1['value'].pop('reference_type')
-        res = auth_obj.search(cr, uid, [('partner_id','=',partner_id),('in_type','=','externo')], limit=1)
+        res = auth_obj.search(cr, uid,
+                [('partner_id','=',partner_id),('in_type','=','externo')],
+                limit=1, context=context)
         if res:
             res1['value']['auth_inv_id'] = res[0]
         return res1
