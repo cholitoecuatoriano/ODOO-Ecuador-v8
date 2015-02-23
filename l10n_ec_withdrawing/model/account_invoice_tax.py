@@ -43,9 +43,7 @@ class AccountInvoiceTax(models.Model):
     @api.v8
     def compute(self, active_invoice):
         tax_grouped = {}
-        cur_obj = self.env['res.currency']
-        cur = active_invoice.currency_id
-        company_currency = self.env['res.company'].browse( active_invoice.company_id.id).currency_id
+        cur = self.env['res.currency'].browse( active_invoice.company_id.id)
         for line in active_invoice.invoice_line:
             _quantity = line.quantity
             _discount = line.discount
@@ -62,7 +60,7 @@ class AccountInvoiceTax(models.Model):
                 val['amount'] = tax['amount']
                 val['manual'] = False
                 val['sequence'] = tax['sequence']
-                val['base'] = cur_obj.round( tax['price_unit'] * line['quantity'])
+                val['base'] = cur.round( tax['price_unit'] * line['quantity'])
                 # Hack to EC
                 if tax['tax_group'] in ['ret_vat_b', 'ret_vat_srv']:
                     ret = float(str(tax['porcentaje'])) / 100
@@ -93,7 +91,7 @@ class AccountInvoiceTax(models.Model):
                         val['base'] * tax['ref_base_sign'],
                         line.invoice_id.currency_id,
                         round=False)
-                    val['tax_amount'] =cur_obj.compute(\
+                    val['tax_amount'] =cur.compute(\
                         val['amount'] * tax['ref_tax_sign'],
                         line.invoice_id.currency_id,
                         round=False)
