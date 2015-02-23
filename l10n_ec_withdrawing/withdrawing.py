@@ -22,7 +22,7 @@
 
 import time
 import logging
-
+import pdb
 from openerp.osv import osv, fields
 from openerp.tools import config
 from openerp.tools.translate import _
@@ -296,97 +296,6 @@ class AccountWithdrawing(osv.osv):
         return True
 
 
-class AccountInvoiceTax(osv.osv):
-
-    _name = 'account.invoice.tax'
-    _inherit = 'account.invoice.tax'
-
-    _columns = {
-        'fiscal_year' : fields.char('Ejercicio Fiscal', size = 4),
-        'tax_group' : fields.selection([('vat','IVA Diferente de 0%'),
-                                        ('vat0','IVA 0%'),
-                                        ('novat','No objeto de IVA'),
-                                        ('ret_vat_b', 'Retención de IVA (Bienes)'),
-                                        ('ret_vat_srv', 'Retención de IVA (Servicios)'),
-                                        ('ret_ir', 'Ret. Imp. Renta'),
-                                        ('no_ret_ir', 'No sujetos a Ret. de Imp. Renta'),
-                                        ('imp_ad', 'Imps. Aduanas'),
-                                        ('ice', 'ICE'),
-                                        ('other','Other')], 'Grupo', required=True),
-        'percent' : fields.char('Porcentaje', size=20),
-        'num_document': fields.char('Num. Comprobante', size=50),
-        'retention_id': fields.many2one('account.retention', 'Retención', select=True),
-        }
-
-    def compute(self, cr, uid, invoice_id, context=None):
-        tax_grouped = {}
-        tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
-        inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
-        cur = inv.currency_id
-        company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id.id
-        for line in inv.invoice_line:
-            for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, line.product_id, inv.partner_id)['taxes']:
-                val={}
-                val['tax_group'] = tax['tax_group']
-                val['percent'] = tax['porcentaje']
-                val['invoice_id'] = inv.id
-                val['name'] = tax['name']
-                val['amount'] = tax['amount']
-                val['manual'] = False
-                val['sequence'] = tax['sequence']
-                val['base'] = cur_obj.round(cr, uid, cur, tax['price_unit'] * line['quantity'])
-                # Hack to EC
-                if tax['tax_group'] in ['ret_vat_b', 'ret_vat_srv']:
-                    ret = float(str(tax['porcentaje'])) / 100
-                    bi = tax['price_unit'] * line['quantity']
-                    imp = (abs(tax['amount']) / (ret * bi)) * 100
-                    val['base'] = (tax['price_unit'] * line['quantity']) * imp / 100
-                else:
-                    val['base'] = tax['price_unit'] * line['quantity']
-
-                if inv.type in ('out_invoice','in_invoice'):
-                    val['base_code_id'] = tax['base_code_id']
-                    val['tax_code_id'] = tax['tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['base_sign'], context={'date': inv.date_invoice or fields.date.context_today(self, cr, uid, context=context)}, round=False)
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['tax_sign'], context={'date': inv.date_invoice or fields.date.context_today(self, cr, uid, context=context)}, round=False)
-                    val['account_id'] = tax['account_collected_id'] or line.account_id.id
-                    val['account_analytic_id'] = tax['account_analytic_collected_id']
-                else:
-                    val['base_code_id'] = tax['ref_base_code_id']
-                    val['tax_code_id'] = tax['ref_tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['ref_base_sign'], context={'date': inv.date_invoice or fields.date.context_today(self, cr, uid, context=context)}, round=False)
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or fields.date.context_today(self, cr, uid, context=context)}, round=False)
-                    val['account_id'] = tax['account_paid_id'] or line.account_id.id
-                    val['account_analytic_id'] = tax['account_analytic_paid_id']
-
-                # If the taxes generate moves on the same financial account as the invoice line
-                # and no default analytic account is defined at the tax level, propagate the
-                # analytic account from the invoice line to the tax line. This is necessary
-                # in situations were (part of) the taxes cannot be reclaimed,
-                # to ensure the tax move is allocated to the proper analytic account.
-                if not val.get('account_analytic_id') and line.account_analytic_id and val['account_id'] == line.account_id.id:
-                    val['account_analytic_id'] = line.account_analytic_id.id
-
-                key = (val['tax_code_id'], val['base_code_id'], val['account_id'])
-                if not key in tax_grouped:
-                    tax_grouped[key] = val
-                else:
-                    tax_grouped[key]['amount'] += val['amount']
-                    tax_grouped[key]['base'] += val['base']
-                    tax_grouped[key]['base_amount'] += val['base_amount']
-                    tax_grouped[key]['tax_amount'] += val['tax_amount']
-
-        for t in tax_grouped.values():
-            t['base'] = cur_obj.round(cr, uid, cur, t['base'])
-            t['amount'] = cur_obj.round(cr, uid, cur, t['amount'])
-            t['base_amount'] = cur_obj.round(cr, uid, cur, t['base_amount'])
-            t['tax_amount'] = cur_obj.round(cr, uid, cur, t['tax_amount'])
-        return tax_grouped
-
-    _defaults = {
-        'fiscal_year': time.strftime('%Y'),
-    }
 
 
 class Invoice(osv.osv):
@@ -1064,78 +973,6 @@ class AccountInvoiceLine(osv.osv):
                 res[-1]['tax_code_id'] = tax_code_id
                 res[-1]['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, tax_amount, context={'date': inv.date_invoice})
         return res
-
-    def product_id_change(self, cr, uid, ids, product, uom_id, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, currency_id=False, context=None, company_id=None):
-        if context is None:
-            context = {}
-        company_id = company_id if company_id != None else context.get('company_id',False)
-        context = dict(context)
-        context.update({'company_id': company_id, 'force_company': company_id})
-        if not partner_id:
-            raise osv.except_osv(_('No Partner Defined!'),_("You must first select a partner!") )
-        if not product:
-            if type in ('in_invoice', 'in_refund'):
-                return {'value': {}, 'domain':{'product_uom':[]}}
-            else:
-                return {'value': {'price_unit': 0.0}, 'domain':{'product_uom':[]}}
-        part = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
-        fpos_obj = self.pool.get('account.fiscal.position')
-        fpos = fposition_id and fpos_obj.browse(cr, uid, fposition_id, context=context) or False
-
-        if part.lang:
-            context.update({'lang': part.lang})
-        result = {}
-        res = self.pool.get('product.product').browse(cr, uid, product, context=context)
-
-        if type in ('out_invoice','out_refund'):
-            a = res.property_account_income.id
-            if not a:
-                a = res.categ_id.property_account_income_categ.id
-        else:
-            a = res.property_account_expense.id
-            if not a:
-                a = res.categ_id.property_account_expense_categ.id
-        a = fpos_obj.map_account(cr, uid, fpos, a)
-        if a:
-            result['account_id'] = a
-
-        if type in ('out_invoice', 'out_refund'):
-            taxes = res.taxes_id and res.taxes_id or (a and self.pool.get('account.account').browse(cr, uid, a, context=context).tax_ids or False)
-        else:
-            taxes = res.supplier_taxes_id and res.supplier_taxes_id or (a and self.pool.get('account.account').browse(cr, uid, a, context=context).tax_ids or False)
-        tax_id = fpos_obj.map_tax(cr, uid, fpos, taxes)
-
-        if type in ('in_invoice', 'in_refund'):
-            result.update( {'price_unit': price_unit or res.standard_price,'invoice_line_tax_id': tax_id} )
-        else:
-            result.update({'price_unit': res.list_price, 'invoice_line_tax_id': tax_id})
-        result['name'] = res.partner_ref
-
-        result['uos_id'] = uom_id or res.uom_id.id
-        if res.description:
-            result['name'] += '\n'+res.description
-
-        domain = {'uos_id':[('category_id','=',res.uom_id.category_id.id)]}
-
-        res_final = {'value':result, 'domain':domain}
-
-        if not company_id or not currency_id:
-            return res_final
-
-        company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
-        currency = self.pool.get('res.currency').browse(cr, uid, currency_id, context=context)
-
-        if company.currency_id.id != currency.id:
-            if type in ('in_invoice', 'in_refund'):
-                res_final['value']['price_unit'] = res.standard_price
-            new_price = res_final['value']['price_unit'] * currency.rate
-            res_final['value']['price_unit'] = new_price
-
-        if result['uos_id'] and result['uos_id'] != res.uom_id.id:
-            selected_uom = self.pool.get('product.uom').browse(cr, uid, result['uos_id'], context=context)
-            new_price = self.pool.get('product.uom')._compute_price(cr, uid, res.uom_id.id, res_final['value']['price_unit'], result['uos_id'])
-            res_final['value']['price_unit'] = new_price
-        return res_final
 
 
 class AccountInvoiceRefund(osv.TransientModel):
