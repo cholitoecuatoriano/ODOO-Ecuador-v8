@@ -8,8 +8,8 @@
 	    name="account.move"
 	    rml="retention/report/report_move.rml" string="Comprobante Contable"/>
 
-    <report auto="False" id="account.retention" model="account.retention"
-            name="account.retention" rml="l10n_ec_withdrawing/report/account_retention.mako"
+    <report auto="False" id="report_withdrawing" model="account.retention"
+        name="withdrawing" rml="l10n_ec_withdrawing/report/account_retention.mako"
             usage="default" string="Retención" header="False" report_type="webkit"/>
     
     <report auto="False" id="account.account_invoices" model="account.invoice"

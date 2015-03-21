@@ -33,7 +33,7 @@ class AccountAtsSustento(osv.osv):
         return res
 
     _rec_name = 'type'
-    
+
     _columns = dict(
         code = fields.char('Código', size=2, required=True),
         type = fields.char('Tipo de Sustento', size=64, required=True),
@@ -53,7 +53,8 @@ class AccountAuthorisation(osv.osv):
             return []
         res = []
         for record in self.browse(cr, uid, ids, context=context):
-            name = '%s (%s-%s)' % (record.type_id.name, record.num_start, record.num_end)
+            name = '%s %s-%s (%s-%s)' % (record.type_id.name,
+                    record.serie_entidad, record.serie_emision, record.num_start, record.num_end)
             res.append((record.id, name))
         return res
 
@@ -150,6 +151,7 @@ class AccountAuthorisation(osv.osv):
         de [@num_start,@num_end]
         """
         obj = self.browse(cr, uid, id)
+        print number, obj.num_start, obj.num_end
         if obj.num_start <= number <= obj.num_end:
             return True
         return False
@@ -159,7 +161,7 @@ class ResParter(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'authorisation_ids': fields.one2many('account.authorisation', 'partner_id', 'Autorizaciones'),        
+        'authorisation_ids': fields.one2many('account.authorisation', 'partner_id', 'Autorizaciones'),
     }
 
 

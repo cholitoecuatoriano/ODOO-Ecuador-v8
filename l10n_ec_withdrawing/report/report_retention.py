@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Gnuthink (<http://gnuthink.com>).
 #
@@ -24,10 +24,10 @@ class report_retention(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(report_retention, self).__init__(cr, uid, name, context)
         self.localcontext.update({
-      
-        })   
-report_sxw.report_sxw('report.retention.pdf','account.retention','retention/report/report_retention.rml',parser=report_retention, header=False)
-                  
+
+        })
+report_sxw.report_sxw('report.retention.pdf','account.retention','l10n_ec_withdrawing/report/withdrawing.rml',parser=report_retention, header=False)
 
 
-    
+
+

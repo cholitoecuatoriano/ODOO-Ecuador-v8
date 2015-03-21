@@ -22,9 +22,9 @@
 ##############################################################################
 
 {
-    'name' : 'Accounting for Ecuador',
-    'version' : '3',
-    "category": 'Generic Modules/Accounting',
+    'name' : 'Withdrawing for Ecuador',
+    'version' : '7.0',
+    "category": 'Accounting/Ecuador',
     'depends' : ['l10n_ec_authorisation', 'report_webkit',
         ],
     'author' : 'Cristian Salamea.',
@@ -33,12 +33,15 @@
     ''',
     'website': 'http://www.ayni.io',
     'update_xml': [
-        'invoice_workflow.xml',
-        'withdrawing_view.xml',
+    ],
+    'data':[
         'withdrawing_report.xml',
+        'withdrawing_view.xml',
+        'invoice_workflow.xml',
         'retention_wizard.xml',
         'data/account.fiscal.position.csv'
-    ],
+
+        ],
     'installable': True,
     'active': False,
 }

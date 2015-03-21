@@ -134,7 +134,7 @@
 	  <field name="amount_total" string="Total a Pagar" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
 	</xpath>
         <xpath expr="//button[@name='invoice_open'][last()]" position="after">
-	  <button name="print_retention" string="Retención" type="object" states="open" icon="gtk-print"/>
+	  <button name="%(report_withdrawing)d" string="Retención" type="action" states="open" icon="gtk-print"/>
 	  <button name="print_move" string="Comprobante" type="object" states="open,paid" icon="gtk-print"/>
 	</xpath>
 	<xpath expr="//field[@name='date_invoice']" position="attributes">

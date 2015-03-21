@@ -22,13 +22,18 @@
 ##############################################################################
 
 {
-    'name' : 'Accounting for Ecuador',
-    "category": 'Generic Modules/Accounting',    
-    'version' : '3',
+    'name' : 'SRI documents sequence',
+    "category": 'Ecuador Accounting',
+    'version' : '7.0',
     'depends' : ['l10n_ec_withdrawing'],
     'author' : 'GnuThink Software Cia. Ltda.',
     'description': '''
-    Sequence Module for Ecuador
+=======================================
+SRI Authorization and sequences
+=======================================
+This module aims to put authorized sequences by SRI to goverment controlled
+documents.
+User must set up sequences according with SRI authorization.
     ''',
     'author': 'GnuThink Software',
     'website': 'http://www.gnuthink.com',
