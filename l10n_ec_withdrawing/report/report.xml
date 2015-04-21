@@ -23,7 +23,7 @@
    id="report_retention" 
    model="account.retention" 
    name="retention.pdf" 
-   rml="l10n_ec_withdrawing/report/withdrawing.rml" 
+   rml="retention/report/report_retention.rml" 
    string="Retencion"/>
    
    <report 
