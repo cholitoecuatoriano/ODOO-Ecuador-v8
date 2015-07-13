@@ -27,6 +27,7 @@ from lxml.etree import DocumentInvalid
 import os
 import datetime
 import logging
+import pdb
 
 from openerp.osv import fields, osv
 
@@ -144,6 +145,9 @@ class wizard_ats(osv.osv_memory):
         self.__logger.info("Compras registradas: %s" % len(inv_ids))
         for inv in inv_obj.browse(cr, uid, inv_ids):
             detallecompras = etree.Element('detalleCompras')
+            if not inv.sustento_id.code:
+                raise osv.except_osv(u'Factura {} no válida'.format(inv.name),
+                        u'Código sustento no se ha definido')
             etree.SubElement(detallecompras, 'codSustento').text = inv.sustento_id.code
             if not inv.partner_id.ced_ruc:
                 raise osv.except_osv('Datos incompletos', 'No ha ingresado toda los datos de %s' % inv.partner_id.name)

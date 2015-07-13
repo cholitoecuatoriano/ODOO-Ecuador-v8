@@ -36,8 +36,8 @@
     </tr>
     <tr>
       <td width="8%"></td>
-	  <td width="80%" colspan="2">${o.address_invoice_id.street or ''} ${o.address_invoice_id.street2 or ''}</td>
-	  <td width="12%" >${o.address_invoice_id.phone or ''}</td>
+	  <td width="80%" colspan="2">${o.partner_id.street or ''} ${o.partner_id.street2 or ''}</td>
+	  <td width="12%" >${o.partner_id.phone or ''}</td>
     </tr>
     <tr>
       <td width="8%"></td>

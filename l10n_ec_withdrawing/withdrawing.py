@@ -22,7 +22,6 @@
 
 import time
 import logging
-import pdb
 from openerp.osv import osv, fields
 from openerp.tools import config
 from openerp.tools.translate import _

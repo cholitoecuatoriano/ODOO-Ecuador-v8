@@ -27,11 +27,11 @@
     "category": 'Accounting/Ecuador',
     'depends' : ['l10n_ec_authorisation', 'report_webkit',
         ],
-    'author' : 'Cristian Salamea.',
+    'author' : 'Cristian Salamea. Marcelo Mora',
     'description': '''
     Accounting for Ecuador, retention docuements
     ''',
-    'website': 'http://www.ayni.io',
+    'website': 'http://accioma.com',
     'update_xml': [
     ],
     'data':[
@@ -39,7 +39,9 @@
         'withdrawing_view.xml',
         'invoice_workflow.xml',
         'retention_wizard.xml',
-        'data/account.fiscal.position.csv'
+        'data/account.fiscal.position.csv',
+        'data/account.tax.code.csv',
+        'data/account.tax.csv',
 
         ],
     'installable': True,

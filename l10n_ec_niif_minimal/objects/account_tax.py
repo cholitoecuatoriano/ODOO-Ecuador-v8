@@ -67,8 +67,6 @@ class account_tax(osv.osv):
             res_aux.append(r)
         return res
 
-account_tax()
-
 class account_tax_template(osv.osv):
     _inherit = "account.tax.template"
     _columns = {
@@ -94,4 +92,3 @@ class account_tax_template(osv.osv):
                                                                                      'type_ec': tax_template.type_ec
                                                                                      })
         return res
-account_tax_template()

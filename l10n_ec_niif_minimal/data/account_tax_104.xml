@@ -626,7 +626,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_b</field>
 			<field name="child_depend">True</field>
 			<field name="type_ec">iva</field>
 		</record>
@@ -642,7 +642,7 @@
 			<field name="ref_tax_code_id" ref="721"/>
 			<field name="type">percent</field>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_b</field>
 			<field name="parent_id" ref="imp721"></field>
 			<field name="type_ec">iva</field>
 		</record>
@@ -663,7 +663,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_serv</field>
 			<field name="child_depend">True</field>
 			<field name="type_ec">iva</field>
 		</record>
@@ -679,7 +679,7 @@
 			<field eval="-0.70000" name="amount"/>
 			<field name="type">percent</field>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_serv</field>
 			<field name="parent_id" ref="imp723"></field>
 			<field name="type_ec">iva</field>
 		</record>
@@ -701,7 +701,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_serv</field>
 			<field name="child_depend">True</field>
 			<field name="type_ec">iva</field>
 		</record>
@@ -717,7 +717,7 @@
 			<field name="ref_tax_code_id" ref="725"/>
 			<field name="type">percent</field>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_iva_serv</field>
 			<field name="parent_id" ref="imp725"></field>
 			<field name="type_ec">iva</field>
 		</record>

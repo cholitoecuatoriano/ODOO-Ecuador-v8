@@ -69,22 +69,22 @@ class account_account(osv.Model):
             if 'tax_ids' in vals and account.tax_ids != vals['tax_ids'][0][2]:
                 list_tax = []
                 list = []
-                "Guarda en las listas los campos removidor o agragados"
+                "Saves on lists removed or added fields"
                 list_tax_new = sorted(vals['tax_ids'][0][2])
                 for a in account.tax_ids:
                     list_tax.append(a.id)
                 sorted(list_tax)
                 sorted(list_tax_new)
-                "ve cuales son los camos q se mantienen"
+                "Check which fields will be keeped"
                 for a in list_tax:
                     for t in list_tax_new:
                         if a == t:
                             list.append(a)
-                "elimina de las listas los campos repetidos"
+                "Remove duplicated fields"
                 for a in list:
                     del(list_tax_new[list_tax_new.index(a)])
                     del(list_tax[list_tax.index(a)])
-                "Guarda e imprime los campos no repetidos en msn"
+                "Saves and print not repeated on msn"
                 for id in list_tax:
                     value = self.pool.get('account.tax').browse(cr,uid,id,context=context).name or _('None')
                     changes.append(_("Tax Removed: '%s'") %(value))
@@ -105,16 +105,13 @@ class account_account(osv.Model):
                     list_consol.append(a.id)
                 sorted(list_consol)
                 sorted(list_consol_new)
-                "ve cuales son los camos q se mantienen"
                 for a in list_consol:
                     for t in list_consol_new:
                         if a == t:
                             list.append(a)
-                "elimina de las listas los campos repetidos"
                 for a in list:
                     del(list_consol_new[list_consol_new.index(a)])
                     del(list_consol[list_consol.index(a)])
-                "Guarda e imprime los campos no repetidos en msn"
                 for id in list_consol:
                     value = self.pool.get('account.account').browse(cr,uid,id,context=context).name or _('None')
                     changes.append(_("Consolidation Removed: '%s'") %(value))
@@ -137,8 +134,6 @@ class account_account(osv.Model):
 
     def _check_allow_code_change(self, cr, uid, ids, context=None):
         '''
-        Se anula toda validacion del modulo base
+        Nullify of all base module validation
         '''
         return True
-
-account_account()

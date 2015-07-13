@@ -1,4 +1,4 @@
-id,code,name,parent_id
+id,code,name,parent_id/id
 account_tax_code1,103,DECLARACION DE RETENCIONES EN LA FUENTE DEL IMP. RENTA (103),
 account_tax_code2,104,DECLARACION DEL IMPUESTO AL VALOR AGREGADO (104),
 account_tax_code3,,RESUMEN DE ADQUISICIONES Y PAGOS DEL PERÍODO QUE DECLARA,account_tax_code2
@@ -107,7 +107,7 @@ account_tax_code109,721,RETENCIÓN DEL 30%,account_tax_code108
 account_tax_code110,723,RETENCIÓN DEL 70%,account_tax_code108
 account_tax_code111,725,RETENCIÓN DEL 100%,account_tax_code108
 account_tax_code113,392,PREDOMINA MANO DE OBRA,account_tax_code10
-account_tax_code114,999,FORM 101,account_tax_code
+account_tax_code114,999,FORM 101,
 account_tax_code115,999999999,RETENCIONES A FAVOR,account_tax_code114
 account_tax_code116,609,RETENCIONES DEL IVA EFECTUADAS EN EL PERIODO,account_tax_code2
 account_tax_code99,517,ADQUISICIONES Y PAGOS (INCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 0%,account_tax_code12

@@ -539,7 +539,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -560,7 +560,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -581,7 +581,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -602,7 +602,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -623,7 +623,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -644,7 +644,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -665,7 +665,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -686,7 +686,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -707,7 +707,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -728,7 +728,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -749,7 +749,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -770,7 +770,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -791,7 +791,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -812,7 +812,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -835,7 +835,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -857,7 +857,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -878,7 +878,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -899,7 +899,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 		
@@ -920,7 +920,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 		</record>
 
@@ -942,7 +942,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 			<field name="imports">True</field>
 		</record>
@@ -964,7 +964,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 			<field name="imports">True</field>
 		</record>
@@ -985,7 +985,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 			<field name="imports">True</field>
 		</record>
@@ -1006,7 +1006,7 @@
 			<field eval="1" name="ref_tax_sign"/>
 			<field eval="1" name="ref_base_sign"/>
 			<field name="type_tax_use">purchase</field>
-			<field name="tax_group">other</field>
+			<field name="tax_group">ret_ir</field>
 			<field name="type_ec">renta</field>
 			<field name="imports">True</field>
 		</record>
