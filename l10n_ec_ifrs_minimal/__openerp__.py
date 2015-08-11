@@ -24,15 +24,17 @@
     'description': """
     This is the base module to manage the accounting chart for Ecuador minimal IFRS compliance.
     """,
-    'author': 'Christopher Ormaza, Ecuadorenlinea.net',
+    'author': 'Marcelo Mora (accioma.com), Christopher Ormaza(Ecuadorenlinea.net)',
+
     'depends': [
                 'account',
                 'base_vat',
                 'base_iban',
                 'account_chart',
+                'l10n_ec_withdrawing',
                 ],
     'init_xml': [],
-    'update_xml': [
+    'data': [
                 'data/account_tax_code.xml',
                 'data/account_chart.xml',
                 'data/account_tax_104.xml',
@@ -41,8 +43,8 @@
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
-                
-                
+
+
                    ],
     'demo_xml': [],
     'installable': True,

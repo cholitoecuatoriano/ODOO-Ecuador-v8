@@ -32,16 +32,14 @@
     Accounting for Ecuador, retention docuements
     ''',
     'website': 'http://accioma.com',
-    'update_xml': [
-    ],
     'data':[
         'withdrawing_report.xml',
         'withdrawing_view.xml',
         'invoice_workflow.xml',
         'retention_wizard.xml',
         'data/account.fiscal.position.csv',
-        'data/account.tax.code.csv',
-        'data/account.tax.csv',
+#        'data/account.tax.code.csv',
+#        'data/account.tax.csv',
 
         ],
     'installable': True,
