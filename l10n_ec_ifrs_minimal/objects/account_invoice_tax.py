@@ -43,6 +43,7 @@ class account_invoice_tax(osv.osv):
                 'exports':fields.boolean('Exports', required=False),
                     }
 
+"""
     def compute(self, cr, uid, invoice_id, context=None):
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
@@ -100,4 +101,4 @@ class account_invoice_tax(osv.osv):
             t['base_amount'] = cur_obj.round(cr, uid, cur, t['base_amount'])
             t['tax_amount'] = cur_obj.round(cr, uid, cur, t['tax_amount'])
         return tax_grouped
-
+"""

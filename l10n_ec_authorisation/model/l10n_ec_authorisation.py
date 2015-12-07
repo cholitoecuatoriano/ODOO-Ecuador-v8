@@ -12,7 +12,7 @@ class AccountAtsDoc(osv.osv):
 
     _columns = dict(
         code = fields.char('Código', size=2, required=True),
-        name = fields.char('Tipo Comprobante', size=64, required=True),
+        name =fields.char('Tipo Comprobante', size=64, required=True),
         )
 
 
@@ -130,7 +130,7 @@ class AccountAuthorisation(osv.osv):
                                         help='Secuencia Alfanumerica para el documento, se debe registrar cuando pertenece a la compañia'),
         }
 
-    def set_authorisation(cr, uid, ids, context):
+    def set_authorisation(self, cr, uid, ids, context):
         return True
 
     _defaults = {

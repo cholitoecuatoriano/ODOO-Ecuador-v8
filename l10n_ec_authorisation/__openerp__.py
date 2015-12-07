@@ -25,12 +25,13 @@
     'author' : 'Cristian Salamea',
     'category': 'Localization',
     'complexity': 'normal',
-    'website': 'http://www.ayni.io',
+    'website': 'http://www.accioma.com',
     'data': [
 #        'security/ir.model.access.csv',
         'view/authorisation_view.xml',
-        'data/account.ats.doc.csv',
-        'data/account.ats.sustento.csv'
+#        'data/account.ats.doc.csv',
+        'data/account_ats_doc.xml',
+        'data/account.ats.sustento.csv',
     ],
     'depends' : [
         'l10n_ec_partner',
@@ -44,6 +45,9 @@
     ],
     'test': [
     ],
+    'demo' : [
+        'demo/authorization_demo.xml'
+    ],
     'installable': True,
-    'auto_install': False,                
+    'auto_install': False,
 }

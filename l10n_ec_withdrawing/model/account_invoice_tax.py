@@ -20,7 +20,7 @@
 ##############################################################################
 from openerp import api, models, fields
 import time
-class AccountInvoiceTax(models.Model):
+class account_invoice_tax(models.Model):
 
     _name = 'account.invoice.tax'
     _inherit = 'account.invoice.tax'
@@ -122,4 +122,19 @@ class AccountInvoiceTax(models.Model):
             t['tax_amount'] = cur.round(t['tax_amount'])
         return tax_grouped
 
+class account_tax_template(models.Model):
+    _name = "account.tax.template"
+    _inherit = "account.tax.template"
+    tax_group = fields.Selection([('vat','IVA Diferente de 0%'),
+                                        ('vat0','IVA 0%'),
+                                        ('novat','No objeto de IVA'),
+                                        ('ret_vat_b', 'Retención de IVA(Bienes)'),
+                                        ('ret_vat_srv', 'Retención de IVA(Servicios)'),
+                                        ('ret_ir', 'Ret. Imp. Renta'),
+                                        ('no_ret_ir', 'No sujetos a Ret. de Imp. Renta'),
+                                        ('imp_ad', 'Imps. Aduanas'),
+                                        ('ice', 'ICE'),
+                                        ('other','Other')], required=False)
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

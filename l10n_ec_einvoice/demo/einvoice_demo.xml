@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1">
+    <!-- ======================================================
+         Partner
+    ===================================================     -->
+    <record id="einvoice_partner_02" model="res.partner">
+      <field name="name">TresCloud</field>
+      <field name="is_company" eval="True" />
+      <field name="type_ced_ruc">ruc</field>
+      <field name="tipo_persona">6</field>
+      <field name="ced_ruc">1792366836001</field>
+    </record>
+    <record id="einvoice_partner_03" model="res.partner">
+      <field name="name">SUSHICORP S.A.</field>
+      <field name="is_company" eval="True" />
+      <field name="type_ced_ruc">ruc</field>
+      <field name="tipo_persona">6</field>
+      <field name="ced_ruc">1792256267001</field>
+    </record>
+  </data>
+</openerp>
+

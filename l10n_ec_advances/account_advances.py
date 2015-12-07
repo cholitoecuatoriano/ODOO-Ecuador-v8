@@ -21,12 +21,12 @@
 #
 ##############################################################################
 
-from time import strftime
-
 from openerp.osv import osv, fields
-import decimal_precision as dp
-from tools.translate import _
-import netsvc
+from time import strftime
+#import openerp.addons.decimal_precision as dp
+#from openerp.tools.translate import _
+#from tools.translate import _
+#import netsvc
 
 class AccountVoucher(osv.osv):
     _inherit = 'account.voucher'

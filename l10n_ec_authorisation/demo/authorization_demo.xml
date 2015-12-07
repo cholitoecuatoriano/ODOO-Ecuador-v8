@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="0">
+    
+    <!-- ======================================================
+        Secuencias
+    ===================================================     -->
+    <record id="invoice_sale_sequence_001001" model="ir.sequence">
+      <field name="name">Caja 001001</field>
+      <field name="code">journal_sale_vou</field>
+      <field name="padding">8</field>
+      <field name="number_next_actual">1</field>
+      <field name="number_increment">1</field>
+      <field name="implementation">standard</field>
+    </record>
+    <record id="invoice_sale_ret_seq_001001" model="ir.sequence">
+      <field name="name">Retenciones 001001</field>
+      <field name="code">journal_sale_vou</field>
+      <field name="padding">8</field>
+      <field name="number_next_actual">1</field>
+      <field name="number_increment">1</field>
+      <field name="implementation">standard</field>
+    </record>
+    <!-- ======================================================
+         Authorization
+    ===================================================     -->
+    <record id="invoice_auth_customer" model="account.authorisation">
+      <field name="name">0987876565</field>
+      <field name="is_electronic" eval="True" />
+      <field name="serie_entidad">001</field>
+      <field name="serie_emision">001</field>
+      <field name="num_start">1</field>
+      <field name="num_end">1000000</field>
+      <field name="expiration_date">2020-12-31</field>
+      <field name="in_type">interno</field>
+      <field name="type_id" ref="l10n_ec_authorisation.doc_factura" />
+      <field name="sequence_id" ref="l10n_ec_authorisation.invoice_sale_sequence_001001" />
+    </record>
+    <record id="invoice_auth_customer_ret" model="account.authorisation">
+      <field name="name">11565434</field>
+      <field name="is_electronic" eval="True" />
+      <field name="serie_entidad">001</field>
+      <field name="serie_emision">001</field>
+      <field name="num_start">1</field>
+      <field name="num_end">1000000</field>
+      <field name="expiration_date">2020-12-31</field>
+      <field name="in_type">interno</field>
+      <field name="type_id" ref="l10n_ec_authorisation.doc_retencion" />
+      <field name="sequence_id" ref="l10n_ec_authorisation.invoice_sale_ret_seq_001001" />
+    </record>
+    <record id="invoice_auth_provider" model="account.authorisation">
+      <field name="partner_id" ref="l10n_ec_partner.einvoice_partner_02" />
+      <field name="name">0987876544</field>
+      <field name="is_electronic" eval="True" />
+      <field name="serie_entidad">001</field>
+      <field name="serie_emision">001</field>
+      <field name="num_start">1</field>
+      <field name="num_end">1000000</field>
+      <field name="expiration_date">2020-12-31</field>
+      <field name="in_type">externo</field>
+      <field name="type_id" ref="l10n_ec_authorisation.doc_factura" />
+    </record>
+    <!-- ======================================================
+         Diarios
+    ===================================================     -->
+    <record id="diario_ventas" model="account.journal">
+      <field name="name">Diario Ventas - (prueba)</field>
+      <field name="code">DPVE</field>
+      <field name="type">sale</field>
+      <field name="sequence_id" ref="account.sequence_sale_journal"/>
+      <field name="default_credit_account_id" ref="account.a_sale"/>
+      <field name="default_debit_account_id" ref="account.a_sale"/>
+      <field name="analytic_journal_id" ref="account.cose_journal_sale"/>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="auth_id" ref="l10n_ec_authorisation.invoice_auth_customer"/>
+    </record>
+  </data>
+</openerp>
+
