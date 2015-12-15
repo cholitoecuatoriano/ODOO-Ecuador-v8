@@ -29,6 +29,10 @@ class AccountInvoice(models.Model):
 
     _inherit = 'account.invoice'
 
+    estab = fields.Char('Establecimiento', help='SRI Establecimiento')
+    ptoEmi = fields.Char('Punto emision', help='SRI Punto emision')
+    secuencial = fields.Integer('Secuencial', help='SRI secuencial')
+
     @api.multi
     def action_number(self):
         """
@@ -48,7 +52,10 @@ class AccountInvoice(models.Model):
                 if not number:
                     tmp_number = self.env['ir.sequence'].next_by_id(auth.sequence_id.id)
                     number = '{0}-{1}-{2}'.format(auth.serie_entidad, auth.serie_emision, tmp_number)
-                data_number.update({'supplier_invoice_number': number})
+                data_number.update({'supplier_invoice_number': number,
+                    'estab' : auth.serie_entidad,
+                    'ptoEmi' : auth.serie_emision,
+                    'secuencial' : int(tmp_number)})
                 self.write(data_number)
 
             if inv.type in ('in_invoice', 'in_refund'):

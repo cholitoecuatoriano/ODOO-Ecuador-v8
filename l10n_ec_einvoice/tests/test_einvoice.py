@@ -39,21 +39,35 @@ class GlobalTestElectronicInvoice(TransactionCase):
         self.partner = self.env['res.partner']
         self.authorisation = self.env['account.authorisation']
         self.journal = self.env['account.journal']
+        self.account = self.env['account.account']
 
-    def create_invoice(self, partner, authorisation, date_invoice, journal):
+    def create_invoice(self, partner, authorisation, journal, account, date_invoice):
         return self.invoice.create({
            'supplier_invoice_number' : '001-001-000000234',
-           'partner_id' : partner,
-           'auth_inv_id' : authorisation,
+           'partner_id' : partner.id,
+           'auth_inv_id' : authorisation.id,
            'date_invoice' : date_invoice,
-           'journal_id' : journal,
-
+           'journal_id' : journal.id,
+           'account_id' : account.id,
            })
 
     def test_10_access_key_generation(self):
         print "========================================="
         print "====== Testing Key Generation ==========="
         print "========================================="
+        print "Create invoice"
         partner = self.partner.env.ref("l10n_ec_partner.einvoice_partner_02")
-        print partner
+        auth = self.authorisation.env.ref("l10n_ec_authorisation.invoice_auth_customer")
+        journal = self.journal.env.ref("l10n_ec_authorisation.diario_ventas")
+        account = self.account.env.ref("__export__.account_account_42")
+
+        print journal._name
+
+        inv = self.create_invoice(partner, auth, journal, account, datetime.now().strftime("%Y-%m-%d"))
+        print inv._compute_access_key()
+
+"""
+        # Check if date, sequence and ruc are placed correctly
+"""
+
 

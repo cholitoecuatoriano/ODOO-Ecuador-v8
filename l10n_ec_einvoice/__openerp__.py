@@ -38,9 +38,10 @@ Support for electronic invoicing:
     'website': 'http://www.accioma.com',
     'images' : [],
     'depends' : [
-        'base', 'l10n_ec_withdrawing',
+        'base', 'l10n_ec_invoice_sequence', 'l10n_ec_withdrawing',
     ],
     'data': [
+        'view/account_invoice_view.xml',
     ],
     'js': [
     ],

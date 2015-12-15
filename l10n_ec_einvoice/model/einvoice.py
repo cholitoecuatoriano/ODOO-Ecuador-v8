@@ -25,33 +25,75 @@ from openerp import api, exceptions, fields, models
 import openerp.addons.decimal_precision as dp
 import datetime
 from lxml import etree
+from .xades import xades
+
+tipoDocumento = { #tabla 4 en la ficha tecnica
+    '01': '01',
+    '04': '04',
+    '05': '05',
+    '06': '06',
+    '07': '07',
+    '18': '01',
+}
+
+tipoIdentificacion = {
+    'ruc' : '04',
+    'cedula' : '05',
+    'pasaporte' : '06',
+    'venta_consumidor_final' : '07',
+    'identificacion_exterior' : '08',
+    'placa' : '09',
+}
+
+codigoImpuesto = {
+    'vat': '2',
+    'vat0': '2',
+    'ice': '3',
+    'other': '5'
+}
+
+tarifaImpuesto = {
+    'vat0': '0',
+    'vat': '2',
+    'novat': '6',
+    'other': '7',
+}
+
+invtypes_04 = {
+        'out_invoice' : '01',
+}
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    def _check_service_availability(self):
+        return True
+
     @api.one
+    @api.depends('date_invoice','journal_id','company_id','estab','ptoEmi','secuencial')
     def _compute_access_key(self):
-        auth = self.journal_id.auth_id
-        ld = self.date_invoice.split('-')
-        ld.reverse()
-        fecha = ''.join(ld)
-        #tcomp = tipoDocumento[auth.type_id.code]
-        tcomp = '01'
-        ruc = self.company_id.partner_id.ced_ruc
-        serie = '{0}{1}'.format(auth.serie_entidad, auth.serie_emision)
-        numero = self.number[6:15]
-        #TODO: security code
         codigo_numero = '12345678'
-        tipo_emision = self.company_id.emission_code
-        access_key = (
-            [fecha, tcomp, ruc],
-            [serie, numero, codigo_numero, tipo_emision]
-            )
-        return access_key
+        #tipo_emision = self.company_id.emission_code
+        tipo_emision = '1' #1 normal, 2 indisponibilidad
 
+        access_number = "{}{}{}{}{}{}{}{}".format(
+                "".join(reversed(self.date_invoice.split('-'))),
+                tipoDocumento[self.journal_id.auth_id.type_id.code],
+                self.company_id.partner_id.ced_ruc,
+                "1",
+                "{}{}".format(self.estab, self.ptoEmi),
+                "{0:09d}".format(self.secuencial),
+                codigo_numero,
+                tipo_emision)
 
-    access_key = fields.Char(string = 'Access Key'
-                             , help='Access Key for document', readonly=True)
+        check_digit = xades.CheckDigit().compute_mod11(access_number)
+        self.access_key = "{}{}".format(access_number, check_digit)
+
+        print self.access_key
+
+    access_key = fields.Char(string = 'Access Key',
+            compute="_compute_access_key",
+            help='Access Key for document', readonly=True)
     auth_number = fields.Char(string = 'Authorization Number',
             readonly = True, help = "Authorization Number")
     auth_status = fields.Char(string = "Authorization status", readonly=True,

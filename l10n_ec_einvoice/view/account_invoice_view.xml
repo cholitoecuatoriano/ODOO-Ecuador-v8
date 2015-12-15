@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- Invoices -->
+    <record id="view_l10n_ec_einvoice" model="ir.ui.view">
+      <field name="name">l10n_ec_einvoice.account.invoice.form</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@string='Payments']" position="after">
+          <page string="SRI Electronic Invoicing">
+            <group>
+              <h3>Facturacion Electonica</h3>
+              <newline />
+              <field name="access_key" />
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</openerp>
+
