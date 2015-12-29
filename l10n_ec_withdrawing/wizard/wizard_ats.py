@@ -150,7 +150,12 @@ class wizard_ats(osv.osv_memory):
                         u'Código sustento no se ha definido')
             etree.SubElement(detallecompras, 'codSustento').text = inv.sustento_id.code
             if not inv.partner_id.ced_ruc:
+                pdb.set_trace()
                 raise osv.except_osv('Datos incompletos', 'No ha ingresado toda los datos de %s' % inv.partner_id.name)
+            if not inv.partner_id.type_ced_ruc:
+                raise osv.except_osv('Datos incompletos',
+                    'No se ha encontrado tipde de identificador para: %s' % inv.partner_id.name)
+
             etree.SubElement(detallecompras, 'tpIdProv').text = tpIdProv[inv.partner_id.type_ced_ruc]
             etree.SubElement(detallecompras, 'idProv').text = inv.partner_id.ced_ruc
             if inv.auth_inv_id:
@@ -245,6 +250,10 @@ class wizard_ats(osv.osv_memory):
                 pdata[inv.partner_id.id]['baseImponible'] += inv.amount_vat_cero
                 pdata[inv.partner_id.id]['baseImpGrav'] += inv.amount_vat
                 pdata[inv.partner_id.id]['montoIva'] += inv.amount_tax
+                if not inv.journal_id.auth_id.type_id.code:
+                    raise osv.except_osv('Datos incompletos'
+                        , 'No ha ingresado toda los datos de %s' % inv.journal_id.auth_id.name)
+
                 pdata[inv.partner_id.id]['tipoComprobante'] = inv.journal_id.auth_id.type_id.code
                 if inv.retention_ir:
                     data_air = self.process_lines(cr, uid, inv.tax_line)
@@ -252,6 +261,7 @@ class wizard_ats(osv.osv_memory):
                         pdata[inv.partner_id.id]['valorRetRenta'] += dt['valRetAir']
                 pdata[inv.partner_id.id]['valorRetIva'] += abs(inv.taxed_ret_vatb) + abs(inv.taxed_ret_vatsrv)
 
+            pdb.set_trace()
             for k, v in pdata.items():
                 detalleVentas = etree.Element('detalleVentas')
                 etree.SubElement(detalleVentas, 'tpIdCliente').text = tpIdCliente[v['tpIdCliente']]

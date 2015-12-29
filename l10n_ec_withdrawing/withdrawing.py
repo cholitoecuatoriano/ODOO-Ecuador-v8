@@ -28,6 +28,7 @@ from openerp.tools.translate import _
 from openerp.tools import ustr
 import openerp.addons.decimal_precision as dp
 import openerp.netsvc
+#import pdb
 
 from openerp import models, api
 
@@ -517,27 +518,27 @@ class Invoice(osv.osv):
             for line in invoice.invoice_line:
                 res[invoice.id]['amount_untaxed'] += line.price_subtotal
             for line in invoice.tax_line:
-                if line.tax_group == 'vat':
+                if line.type_ec == 'vat':
                     res[invoice.id]['amount_vat'] += line.base
                     res[invoice.id]['amount_tax'] += line.amount
-                elif line.tax_group == 'vat0':
+                elif line.type_ec == 'vat0':
                     res[invoice.id]['amount_vat_cero'] += line.base
-                elif line.tax_group == 'novat':
+                elif line.type_ec == 'novat':
                     res[invoice.id]['amount_novat'] += line.base
-                elif line.tax_group == 'no_ret_ir':
+                elif line.type_ec == 'no_ret_ir':
                     res[invoice.id]['amount_noret_ir'] += line.base
-                elif line.tax_group in ['ret_vat_b', 'ret_vat_srv', 'ret_ir']:
+                elif line.type_ec in ['ret_vat_b', 'ret_vat_srv', 'ret_ir']:
                     res[invoice.id]['amount_tax_retention'] += line.amount
-                    if line.tax_group == 'ret_vat_b':#in ['ret_vat_b', 'ret_vat_srv']:
+                    if line.type_ec == 'ret_vat_b':#in ['ret_vat_b', 'ret_vat_srv']:
                         res[invoice.id]['amount_tax_ret_vatb'] += line.base
                         res[invoice.id]['taxed_ret_vatb'] += line.amount
-                    elif line.tax_group == 'ret_vat_srv':
+                    elif line.type_ec == 'ret_vat_srv':
                         res[invoice.id]['amount_tax_ret_vatsrv'] += line.base
                         res[invoice.id]['taxed_ret_vatsrv'] += line.amount
-                    elif line.tax_group == 'ret_ir':
+                    elif line.type_ec == 'ret_ir':
                         res[invoice.id]['amount_tax_ret_ir'] += line.base
                         res[invoice.id]['taxed_ret_ir'] += line.amount
-                elif line.tax_group == 'ice':
+                elif line.type_ec == 'ice':
                     res[invoice.id]['amount_ice'] += line.amount
 
             # base vat not defined, amount_vat_cero by default
@@ -583,11 +584,11 @@ class Invoice(osv.osv):
                 'no_retention_ir': False,
                 }
             for tax in inv.tax_line:
-                if tax.tax_group in ['ret_vat_b', 'ret_vat_srv']:
+                if tax.type_ec in ['ret_vat_b', 'ret_vat_srv']:
                     res[inv.id]['retention_vat'] = True
-                elif tax.tax_group == 'ret_ir':
+                elif tax.type_ec == 'ret_ir':
                     res[inv.id]['retention_ir'] = True
-                elif tax.tax_group == 'no_ret_ir':
+                elif tax.type_ec == 'no_ret_ir':
                     res[inv.id]['no_retention_ir'] = True
         return res
 
@@ -884,7 +885,8 @@ class Invoice(osv.osv):
                                 }
                     ret_id = ret_obj.create(cr, uid, ret_data)
                     for line in inv.tax_line:
-                        if line.tax_group in ['ret_vat_b', 'ret_vat_srv', 'ret_ir']:
+                        pdb.set_trace()
+                        if line.type_ec in ['ret_vat_b', 'ret_vat_srv', 'ret_ir']:
                             num = inv.supplier_number
                             invtax_obj.write(cr, uid, line.id, {'retention_id': ret_id, 'num_document': num})
                     if num_ret:
