@@ -10,7 +10,7 @@
         <xpath expr="//page[@string='Payments']" position="after">
           <page string="SRI Electronic Invoicing">
             <group>
-              <h3>Facturacion Electonica</h3>
+              <h3 cols="4">Facturacion Electonica</h3>
               <newline />
               <field name="access_key" />
             </group>

@@ -23,7 +23,7 @@
 
 from openerp import api, exceptions, fields, models
 import openerp.addons.decimal_precision as dp
-import datetime
+import time
 from lxml import etree
 from .xades import xades
 
@@ -89,7 +89,7 @@ class AccountInvoice(models.Model):
         check_digit = xades.CheckDigit().compute_mod11(access_number)
         self.access_key = "{}{}".format(access_number, check_digit)
 
-        print self.access_key
+        print self._get_invoice_element()
 
     access_key = fields.Char(string = 'Access Key',
             compute="_compute_access_key",
@@ -109,6 +109,38 @@ class AccountInvoice(models.Model):
             selection = [('1', "Issuing normal"),
                          ('2', "Issuing at no available system")],
             help = "Issuing type. Table 2")
+
+    @api.one
+    def _get_invoice_element(self):
+        """
+        """
+        company = self.company_id
+        partner = self.partner_id
+        d={}
+        d["fechaEmision"] = time.strftime('%d/%m/%Y',time.strptime(self.date_invoice, '%Y-%m-%d'))
+        d["dirEstablecimiento"] = company.street2
+        d["obligadoContabilidad"] = "SI"
+        d["tipoIdentificacionComprador"] = tipoIdentificacion[partner.type_ced_ruc]
+        d["razonSocialComprador"] = partner.name
+        if not d["razonSocialComprador"]:
+            d["razonSocialComprador"] = 'CONSUMIDOR FINAL'
+        d['identificacionComprador'] =  partner.ced_ruc
+        d["totalSinImpuestos"] = '{:.2f}'.format(self.amount_untaxed)
+        d["totalDescuento"] = '0.00' #'{:.2f}'.format(self.discount_total)
+        d["totalConImpuestos"] = []
+
+        for tax in self.tax_line:
+            if tax.tax_group in ['vat', 'vat0', 'ice', 'other']:
+                totalImpuesto = {'totalImpuesto':{}}
+                totalImpuesto['codigo'] = codigoImpuesto[tax.tax_group]
+                totalImpuesto['codigoPorcentaje'] = tarifaImpuesto[tax.tax_group]
+                totalImpuesto['baseImponible'] = '{:.2f}'.format(tax.base_amount)
+                totalImpuesto['valor'] = '{:.2f}'.format(tax.tax_amount)
+                d["totalConImpuestos"].append(totalImpuesto)
+        d["propina"] = 0
+        d["fleteInternacional"]=0
+        d["importeTotal"]= '{:.2f}'.format(self.amount_pay)
+        return d
 
     def _get_tax_element(self, invoice, access_key, emission_code):
         """
